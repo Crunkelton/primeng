@@ -12,7 +12,8 @@ import {DomHandler} from '../dom/domhandler';
                 <div *ngFor="let command of commands">
                     <span>{{prompt}}</span>
                     <span class="ui-terminal-command">{{command.text}}</span>
-                    <div>{{command.response}}</div>
+                    <div *ngIf="!html">{{command.response}}</div>
+                    <div *ngIf="html" [innerHtml]='command.response'></div>
                 </div>
             </div>
             <div>
@@ -24,7 +25,8 @@ import {DomHandler} from '../dom/domhandler';
     providers: [DomHandler]
 })
 export class Terminal implements AfterViewInit,AfterViewChecked {
-
+    @Input() html: boolean = false;
+    
     @Input() welcomeMessage: string;
 
     @Input() prompt: string;
